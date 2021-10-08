@@ -1,6 +1,4 @@
 .movie-main-wrapper{
-    // display: flex;
-    // flex-direction: column;
     .navbar-header{
         display: flex;
         align-items: center;
@@ -20,6 +18,19 @@
             flex-wrap: wrap;
             margin-bottom: 1em;
             justify-content: flex-end;
+            align-items: center;
+            font-size: 17px;
+            button{
+                padding: 10px;
+                border-radius: 19px;
+                border: 0px;
+                background: #2cbff7;
+                margin: 0px 2px;
+                
+            }
+            .active{
+                    background-color: #8ef72cb6;
+            }
         }
          .movie-table-list-row{
             box-sizing: border-box;

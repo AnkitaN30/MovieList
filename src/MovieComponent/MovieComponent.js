@@ -1,6 +1,4 @@
 import React,{Component} from 'react';
-// import MoviesTableComponent from './MoviesTableComponent/MoviesTableComponent';
-// import './MoviesTableComponent/MoviesTableComponent.css';
 import './MovieComponent.scss'
 import axios from 'axios';
 import {connect} from 'react-redux';
@@ -20,13 +18,10 @@ class MovieComponent extends Component {
         };
         this.handleOrderBy = this.handleOrderBy.bind(this);
         this.showHideDetails = this.showHideDetails.bind(this);
-        // this.movieItemRef = React.createRef();
-
     }
 
     componentDidMount(){
-        axios('./Data.json').
-        then(res=>{
+        axios('./Data.json').then(res=>{
             if(res){
                 const movieList = res && res.data && res.data.components && res.data.components[1].items;
                 this.props.initalMovie(movieList);
@@ -36,8 +31,7 @@ class MovieComponent extends Component {
                     movieList:res && res.data && res.data.components && res.data.components[1].items,
                 })
             }
-        }).
-        catch(err=>console.log(err));
+        }).catch(err=>console.log(err));
     }
 
     // setting state for order by
@@ -48,7 +42,6 @@ class MovieComponent extends Component {
     }
 
     showHideDetails(e){
-        console.log("target",e)
           const val = this.props.movieList.find(ele=>{
             return ele.id === e
           });
@@ -94,36 +87,42 @@ class MovieComponent extends Component {
 
             <div className="movie-table-component">
                 <div className="movie-table-header-row">
-                    Order By:
-                    <button onClick={() => { this.handleOrderBy("date") }}>By Date</button>
-                    <button onClick={() => { this.handleOrderBy("rank") }}>By Rank</button>
+                    <span>Order By:</span>
+                    <button className={order === "date" ?"order-movie active":"order-movie"} onClick={() => { this.handleOrderBy("date") }}>By Date</button>
+                    <button className={order === "rank" ?"order-movie active":"order-movie"} onClick={() => { this.handleOrderBy("rank") }}>By Rank</button>
+                   {
+                       showDetails && mid &&
+                    (<button onClick={() => { this.hideDetails() }}> Back </button>)
+                     }
                 </div>
                 <div className="movie-table-list">
                     {
                         !mid ?
                             (displayMovieList && displayMovieList.map((item, index) => {
                                 return (
-                                    <>
+                                    <React.Fragment>
                                         <div className="movie-table-list-row" key={index} id={item.id}>
-                                            <div className="movie-name-column" onClick={(e) => { this.showHideDetails(item.id, e) }}>
-                                                <span>{item.title}</span>
+                                            <div className="movie-name-column" key={index} onClick={(e) => { this.showHideDetails(item.id, e) }}>
+                                                <span key={index}>{item.title}</span>
                                             </div>
 
                                         </div>
 
-                                    </>
+                                    </React.Fragment>
                                 )
                             }
                             )) :
                             (
                                 showDetails && mid && (
-                                    <div className="movie-table-list-row movie-details" onClick={() => { this.hideDetails() }}>
+                                    <div className="movie-table-list-row movie-details" key={mid.id} onClick={() => { this.hideDetails() }}>
                                         <div className="movie-details-synopsis">
                                             <span>Title:</span>{mid.title}
-                                        </div>
-                                        {/* <img src={mid.imageUrl} alt={mid.imageUrl} height="350" width='300' /> */}
-                                        <div className="movie-details-synopsis">
+                                        </div>                                       
+                                       <div className="movie-details-synopsis">
                                             <span>Synopsis:</span>{mid.synopsis}
+                                        </div>
+                                        <div className="movie-details-synopsis" style={{width:"100%"}}>
+                                            <span>Rank:</span>{mid.rank}
                                         </div>
                                         <div className="movie-details-date">
                                             <span>Realease Date:</span>{mid.releaseDate}
