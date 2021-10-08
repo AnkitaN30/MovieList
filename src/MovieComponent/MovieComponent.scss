@@ -1,0 +1,56 @@
+.movie-main-wrapper{
+    // display: flex;
+    // flex-direction: column;
+    .navbar-header{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 30px;
+        font-weight: bold;
+    }
+    .movie-table-component{
+        display: block;
+        padding: 1em;
+        box-shadow: none;
+        padding-top: 5%;
+        .movie-table-header-row{
+            box-sizing: border-box;
+            width: 50%;
+            display: flex;
+            flex-wrap: wrap;
+            margin-bottom: 1em;
+            justify-content: flex-end;
+        }
+         .movie-table-list-row{
+            box-sizing: border-box;
+            width: 50%;
+            display: flex;
+            flex-wrap: wrap;
+            margin-bottom: 2em;
+            box-shadow: 0 0 40px rgb(0 0 0 / 20%);
+             .movie-name-column{
+                box-sizing: border-box;
+                flex: 1;
+                padding: 0.8em 1.2em;
+                overflow: hidden;
+                list-style: none;
+             }
+             
+         }
+         .movie-details{
+            .movie-details-synopsis{
+                span{                     
+                    font-weight: bold;
+                 }   
+            } 
+            .movie-details-date
+            {
+                span{                     
+                font-weight: bold;
+                }  
+            }               
+            padding: 0.8em 1.2em;
+            font-size: 15px;
+         }
+    }
+}
