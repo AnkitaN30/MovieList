@@ -4,8 +4,6 @@ import {connect} from 'react-redux';
 import React, { useEffect,useState } from 'react';
 
 function MovieComponent(props) {
-    // const [movieData, setMovieData] = useState([]);
-    // const [movieList, setMovieList] = useState([]);
     const [order, seOrder] = useState('');
     const [showDetails, setShowDetails] = useState(false);
     const [mid, setMid] = useState(null);
@@ -16,9 +14,7 @@ function MovieComponent(props) {
             if(res){
                 const movieLists = res && res.data && res.data.components && res.data.components[1].items;
                 props.initalMovie(movieLists);
-                // setMovieData(res && res.data && res.data.components && res.data.components);
-                // setMovieList(res && res.data && res.data.components && res.data.components[1].items);               
-            }
+                  }
         }).catch(err=>console.log(err));
     })
 
