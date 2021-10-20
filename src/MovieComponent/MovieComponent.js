@@ -1,73 +1,50 @@
-import React,{Component} from 'react';
 import './MovieComponent.scss'
 import axios from 'axios';
 import {connect} from 'react-redux';
+import React, { useEffect,useState } from 'react';
 
-class MovieComponent extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            movieData:[],
-            orderMovieByDate:[],
-            orderMovieByRank:[],
-            movieList:[],
-            order:'',
-            showDetails:false,
-            mid:null
+function MovieComponent(props) {
+    // const [movieData, setMovieData] = useState([]);
+    // const [movieList, setMovieList] = useState([]);
+    const [order, seOrder] = useState('');
+    const [showDetails, setShowDetails] = useState(false);
+    const [mid, setMid] = useState(null);
 
-        };
-        this.handleOrderBy = this.handleOrderBy.bind(this);
-        this.showHideDetails = this.showHideDetails.bind(this);
-    }
 
-    componentDidMount(){
+    useEffect(()=>{
         axios('./Data.json').then(res=>{
             if(res){
-                const movieList = res && res.data && res.data.components && res.data.components[1].items;
-                this.props.initalMovie(movieList);
-                
-                this.setState({
-                    movieData:res && res.data && res.data.components && res.data.components,
-                    movieList:res && res.data && res.data.components && res.data.components[1].items,
-                })
+                const movieLists = res && res.data && res.data.components && res.data.components[1].items;
+                props.initalMovie(movieLists);
+                // setMovieData(res && res.data && res.data.components && res.data.components);
+                // setMovieList(res && res.data && res.data.components && res.data.components[1].items);               
             }
         }).catch(err=>console.log(err));
-    }
+    })
 
     // setting state for order by
-    handleOrderBy(order){
-       this.setState({
-        order
-       })
-    }
+    const handleOrderBy = (order => {
+        seOrder(order)
+    })
 
-    showHideDetails(e){
-          const val = this.props.movieList.find(ele=>{
+    const showHideDetails = (e=>{
+          const val = props.movieList.find(ele=>{
             return ele.id === e
           });
 
         if(val){
-            this.setState({
-                showDetails:!this.state.showDetails,
-                mid:val
-            })
+            setShowDetails(!showDetails);
+            setMid(val);
         }
-    }
+    })
 
-    hideDetails(){
-        this.setState(
-            { 
-                showDetails:!this.state.showDetails,
-                mid:null
-             }
-            )
-    }
+    const hideDetails = (()=>{
+        setShowDetails(!showDetails);
+        setMid(null);
+    })
 
 
-  render(){
-      const{movieList}=this.props;
-      const{order,showDetails,mid}=this.state;
-      let displayMovieList= movieList; 
+      let displayMovieList= props.movieList; 
 
       if(order === "rank"){
         displayMovieList.sort((firstItem,secondItem)=>{
@@ -88,11 +65,11 @@ class MovieComponent extends Component {
             <div className="movie-table-component">
                 <div className="movie-table-header-row">
                     <span>Order By:</span>
-                    <button className={order === "date" ?"order-movie active":"order-movie"} onClick={() => { this.handleOrderBy("date") }}>By Date</button>
-                    <button className={order === "rank" ?"order-movie active":"order-movie"} onClick={() => { this.handleOrderBy("rank") }}>By Rank</button>
+                    <button className={order === "date" ?"order-movie active":"order-movie"} onClick={() => { handleOrderBy("date") }}>By Date</button>
+                    <button className={order === "rank" ?"order-movie active":"order-movie"} onClick={() => { handleOrderBy("rank") }}>By Rank</button>
                    {
                        showDetails && mid &&
-                    (<button onClick={() => { this.hideDetails() }}> Back </button>)
+                    (<button onClick={() => { hideDetails() }}> Back </button>)
                      }
                 </div>
                 <div className="movie-table-list">
@@ -102,7 +79,7 @@ class MovieComponent extends Component {
                                 return (
                                     <React.Fragment>
                                         <div className="movie-table-list-row" key={index} id={item.id}>
-                                            <div className="movie-name-column" key={index} onClick={(e) => { this.showHideDetails(item.id, e) }}>
+                                            <div className="movie-name-column" key={index} onClick={(e) => { showHideDetails(item.id, e) }}>
                                                 <span key={index}>{item.title}</span>
                                             </div>
 
@@ -114,7 +91,7 @@ class MovieComponent extends Component {
                             )) :
                             (
                                 showDetails && mid && (
-                                    <div className="movie-table-list-row movie-details" key={mid.id} onClick={() => { this.hideDetails() }}>
+                                    <div className="movie-table-list-row movie-details" key={mid.id} onClick={() => { hideDetails() }}>
                                         <div className="movie-details-synopsis">
                                             <span>Title:</span>{mid.title}
                                         </div>                                       
@@ -137,7 +114,6 @@ class MovieComponent extends Component {
         </div>
     );
   }
-}
 
 const mapStateToProps = (state)=>{
     return{
