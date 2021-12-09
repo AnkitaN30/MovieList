@@ -1,10 +1,11 @@
 import MovieComponent from './MovieComponent/MovieComponent';
-import './App.css';
+import ModalComponent from './ModalComponent/ModalComponent';
 
 function App() {
   return (
     <div className="App" key="app">
-          <MovieComponent/> 
+          <MovieComponent/>
+          <ModalComponent/>
       </div>
   );
 }
