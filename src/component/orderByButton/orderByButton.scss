@@ -1,0 +1,11 @@
+.order-by-button{
+    display: flex;
+    justify-content:end;
+    align-items:center;
+    .active{
+        background-color: green;
+        &:hover {
+            background-color: green;
+        }
+    }
+}

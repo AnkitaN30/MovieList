@@ -1,10 +1,11 @@
-import MovieComponent from './MovieComponent/MovieComponent';
-import './App.css';
+import Movie from '../src/component/movie/movie';
+import DescriptionModal from "../src/component/descriptionModal/descriptionModal"; 
 
 function App() {
   return (
     <div className="App" key="app">
-          <MovieComponent/> 
+          <Movie/>
+          <DescriptionModal/>
       </div>
   );
 }
