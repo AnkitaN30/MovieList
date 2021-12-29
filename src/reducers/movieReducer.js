@@ -1,4 +1,3 @@
-import { getMovieData } from "../service/getMovieData";
 
 const initState = {
     movieList: [],
@@ -54,35 +53,3 @@ export const getError = (state)=>state.errormessage;
 export const getModalState = (state)=>state.modalState;
 export const getModalData= (state)=>state.modalData;
 
-export const setModalState = (modalState)=>({
-    type:SET_MODALSTATE,
-    payload:modalState
-})
-
-export const setModalData = (modalData)=>({
-    type:SET_MODALDATA,
-    payload:modalData
-})
-
-export const setOrderBy = (orderBy)=>({
-    type:UPDATE_ORDERBY,
-    payload:orderBy
-})
-
-
-//Action creators
-export const loadMovieDetails = () => async (dispatch, getState) => 
-{
-    try {
-        let movieData = await getMovieData();
-        dispatch({
-            type: STORE_MOVIE_DETAILS,
-            payload: movieData
-            });
-    } catch (error) {
-        dispatch({
-            type: ERROR,
-            payload:"Error in fetching"
-        })
-    }
-}

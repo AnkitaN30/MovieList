@@ -1,19 +1,17 @@
-import React, { useEffect } from "react";
+import React  from "react";
 import { Grid } from '@mui/material';
 import { Box } from "@mui/system";
-import ButtonComponent from "../ButtonComponent/ButtonComponent";
+import ButtonComponent from "../orderByButton/orderByButton";
 import { useDispatch,useSelector } from "react-redux";
-import { loadMovieDetails,getError } from "../reducers/movieReducer";
-import MovieList from "../MovieList/MovieList";
+import { getError } from "../../reducers/movieReducer";
+import { loadMovieDetails } from "../../actions/movieActions";
+import MovieList from "../movieList/movieList";
 
 function MovieComponent() {
     const dispatch = useDispatch();
     const error = useSelector(getError);
-
-    useEffect(() => {
-        dispatch(loadMovieDetails());
-    }, [])
-
+    dispatch(loadMovieDetails());
+    
     return (
         <Grid container spacing={2} >
             <Grid item md={3} sm={3} xs={3} />
